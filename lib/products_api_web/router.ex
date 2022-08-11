@@ -7,6 +7,8 @@ defmodule ProductsApiWeb.Router do
 
   scope "/api", ProductsApiWeb do
     pipe_through :api
+
+    resources "/categories", CategoryController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development
