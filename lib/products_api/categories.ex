@@ -18,7 +18,10 @@ defmodule ProductsApi.Categories do
 
   """
   def list_categories do
-    Repo.all(Category)
+    Category
+    |> order_by([c], [c.name])
+    |> Repo.all()
+    |> Repo.preload([products: :brand])
   end
 
   @doc """
@@ -35,7 +38,11 @@ defmodule ProductsApi.Categories do
       ** (Ecto.NoResultsError)
 
   """
-  def get_category!(id), do: Repo.get!(Category, id)
+  def get_category!(id) do
+    Category
+    |> Repo.get!(id)
+    |> Repo.preload([products: :brand])
+  end
 
   @doc """
   Creates a category.

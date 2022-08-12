@@ -9,6 +9,8 @@ defmodule ProductsApiWeb.Router do
     pipe_through :api
 
     resources "/categories", CategoryController, except: [:new, :edit]
+    resources "/brands", BrandController, except: [:new, :edit]
+    resources "/products", ProductController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development

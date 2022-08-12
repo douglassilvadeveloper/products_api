@@ -22,7 +22,7 @@ defmodule ProductsApiWeb.CategoryController do
 
   def show(conn, %{"id" => id}) do
     category = Categories.get_category!(id)
-    render(conn, "show.json", category: category)
+    render(conn, "show_with_products.json", category: category)
   end
 
   def update(conn, %{"id" => id, "category" => category_params}) do

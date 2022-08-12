@@ -1,4 +1,4 @@
-defmodule ProductsApi.Categories.Category do
+defmodule ProductsApi.Products.Brand do
   use Ecto.Schema
   import Ecto.Changeset
   import Slugy
@@ -7,7 +7,7 @@ defmodule ProductsApi.Categories.Category do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-  schema "categories" do
+  schema "brands" do
     field :name, :string
     field :slug, :string
     has_many :products, Product
@@ -16,8 +16,8 @@ defmodule ProductsApi.Categories.Category do
   end
 
   @doc false
-  def changeset(category, attrs) do
-    category
+  def changeset(brand, attrs) do
+    brand
     |> cast(attrs, [:name])
     |> slugify(:name)
     |> validate_required([:name, :slug])
