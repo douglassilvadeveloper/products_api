@@ -3,6 +3,7 @@ defmodule ProductsApiWeb.ProductController do
 
   alias ProductsApi.Products
   alias ProductsApi.Products.Product
+  alias ProductsApi.Repo
 
   action_fallback ProductsApiWeb.FallbackController
 
@@ -16,7 +17,7 @@ defmodule ProductsApiWeb.ProductController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.product_path(conn, :show, product))
-      |> render("show.json", product: product)
+      |> render("show_with_brand_and_category.json", product: product |> Repo.preload([:brand, :category]))
     end
   end
 
@@ -29,9 +30,11 @@ defmodule ProductsApiWeb.ProductController do
     product = Products.get_product!(id)
 
     with {:ok, %Product{} = product} <- Products.update_product(product, product_params) do
-      render(conn, "show.json", product: product)
+      render(conn, "show_with_brand_and_category.json", product: product |> Repo.preload([:brand, :category]))
     end
   end
+
+  # def preload_handler()
 
   def delete(conn, %{"id" => id}) do
     product = Products.get_product!(id)

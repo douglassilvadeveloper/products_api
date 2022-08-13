@@ -3,6 +3,7 @@ defmodule ProductsApiWeb.CategoryController do
 
   alias ProductsApi.Categories
   alias ProductsApi.Categories.Category
+  alias ProductsApi.Repo
 
   action_fallback ProductsApiWeb.FallbackController
 
@@ -16,7 +17,7 @@ defmodule ProductsApiWeb.CategoryController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.category_path(conn, :show, category))
-      |> render("show.json", category: category)
+      |> render("show_with_products.json", category: category |> Repo.preload([products: :brand]))
     end
   end
 
@@ -29,7 +30,7 @@ defmodule ProductsApiWeb.CategoryController do
     category = Categories.get_category!(id)
 
     with {:ok, %Category{} = category} <- Categories.update_category(category, category_params) do
-      render(conn, "show.json", category: category)
+      render(conn, "show_with_products.json", category: category |> Repo.preload([products: :brand]))
     end
   end
 

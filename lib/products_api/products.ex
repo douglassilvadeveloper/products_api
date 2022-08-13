@@ -21,7 +21,7 @@ defmodule ProductsApi.Products do
     Brand
     |> order_by([b], [b.name])
     |> Repo.all()
-    |> Repo.preload([:products])
+    |> Repo.preload([products: :category])
   end
 
   @doc """
@@ -41,7 +41,7 @@ defmodule ProductsApi.Products do
   def get_brand!(id) do
     Brand
     |> Repo.get!(id)
-    |> Repo.preload([:products])
+    |> Repo.preload([products: :category])
   end
 
   @doc """

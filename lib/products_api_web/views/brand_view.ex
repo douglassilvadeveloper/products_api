@@ -27,7 +27,7 @@ defmodule ProductsApiWeb.BrandView do
       id: brand.id,
       name: brand.name,
       slug: brand.slug,
-      products: render_many(brand.products, ProductView, "product.json")
+      products: render_many(brand.products, ProductView, "product_with_category.json")
     }
   end
 end

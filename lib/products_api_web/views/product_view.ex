@@ -33,6 +33,15 @@ defmodule ProductsApiWeb.ProductView do
       brand: render_one(product.brand, BrandView, "brand.json")
     }
   end
+  def render("product_with_category.json", %{product: product}) do
+    %{
+      id: product.id,
+      name: product.name,
+      slug: product.slug,
+      price: product.price,
+      category: render_one(product.category, CategoryView, "category.json")
+    }
+  end
   def render("product_with_brand_and_category.json", %{product: product}) do
     %{
       id: product.id,
